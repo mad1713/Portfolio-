@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madeleine MENAKPO | UI/UX Designer & Front-end Dev</title>
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --apple-black: #1d1d1f;
+            --apple-gray: #86868b;
+            --apple-light-gray: #f5f5f7;
+            --apple-blue: #0071e3;
+            --apple-glass: rgba(255, 255, 255, 0.72);
+            --transition: all 0.5s cubic-bezier(0.28, 0.11, 0.32, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: #ffffff;
+            color: var(--apple-black);
+            line-height: 1.5;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation Style Apple */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--apple-glass);
+            backdrop-filter: saturate(180%) blur(20px);
+            z-index: 9999;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 22px;
+        }
+
+        .logo {
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: -0.02em;
+            color: var(--apple-black);
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--apple-black);
+            font-size: 12px;
+            font-weight: 400;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 1;
+            color: var(--apple-blue);
+        }
+
+        /* Responsive Nav pour mobile */
+        @media (max-width: 600px) {
+            nav ul {
+                display: none; /* Cache les liens sur très petits écrans pour épurer */
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px 20px;
+            background: #fbfbfd;
+        }
+
+        .hero-label {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-weight: 600;
+            color: var(--apple-blue);
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards 0.2s;
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 10vw, 80px);
+            font-weight: 700;
+            letter-spacing: -0.015em;
+            line-height: 1.07;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards 0.4s;
+            max-width: 900px;
+        }
+
+        .hero p {
+            font-size: clamp(17px, 4vw, 24px);
+            color: var(--apple-gray);
+            max-width: 700px;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards 0.6s;
+        }
+
+        .hero-btns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            opacity: 0;
+            animation: fadeInUp 0.8s forwards 0.8s;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            padding: clamp(60px, 10vw, 120px) 20px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-container {
+            max-width: 1000px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: clamp(30px, 5vw, 80px);
+        }
+
+        .profile-image-wrapper {
+            flex-shrink: 0;
+            width: clamp(200px, 30vw, 320px);
+            height: clamp(200px, 30vw, 320px);
+            border-radius: 50%;
+            overflow: hidden;
+            background: var(--apple-light-gray);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .profile-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-text {
+            flex: 1;
+        }
+
+        .profile-text h2 {
+            font-size: clamp(24px, 5vw, 36px);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Section Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Vision Section */
+        .vision-section {
+            padding: clamp(60px, 10vw, 120px) 20px;
+            background: #fff;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section-title {
+            font-size: clamp(28px, 6vw, 44px);
+            font-weight: 600;
+            margin-bottom: clamp(30px, 8vw, 60px);
+        }
+
+        .vision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .vision-card {
+            padding: clamp(30px, 5vw, 40px);
+            background: var(--apple-light-gray);
+            border-radius: 24px;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        .vision-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .vision-card i {
+            font-size: 2rem;
+            color: var(--apple-blue);
+            margin-bottom: 20px;
+        }
+
+        /* Expertise Section */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .skill-chip {
+            background: #fff;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Projects Section */
+        .project-section {
+            padding: clamp(60px, 10vw, 120px) 20px;
+            background: #000;
+            color: #fff;
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 850px) {
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .project-card {
+            position: relative;
+            min-height: 480px;
+            border-radius: 28px;
+            overflow: hidden;
+            background: #1d1d1f;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card.wide {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 850px) {
+            .project-card.wide {
+                grid-column: span 1;
+            }
+        }
+
+        .project-content {
+            position: relative;
+            padding: clamp(30px, 6vw, 45px);
+            z-index: 3;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .project-tag {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--apple-gray);
+            margin-bottom: 12px;
+        }
+
+        .project-name {
+            font-size: clamp(24px, 4vw, 32px);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .project-desc {
+            font-size: 16px;
+            color: #a1a1a6;
+            max-width: 450px;
+            margin-bottom: 30px;
+        }
+
+        .project-btn {
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            margin-top: auto;
+        }
+
+        .project-btn:hover {
+            background: #fff;
+            color: #000;
+            transform: scale(1.02);
+        }
+
+        .project-btn i {
+            margin-left: 10px;
+            font-size: 12px;
+        }
+
+        .project-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.9) 100%);
+            z-index: 2;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: clamp(80px, 15vw, 150px) 20px;
+            text-align: center;
+        }
+
+        .apple-btn {
+            display: inline-block;
+            background: var(--apple-blue);
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 17px;
+            transition: var(--transition);
+        }
+
+        .apple-btn:hover {
+            background: #0077ed;
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: var(--apple-light-gray);
+            padding: 60px 20px;
+            font-size: 12px;
+            color: var(--apple-gray);
+            text-align: center;
+        }
+
+        .social-links {
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .social-links a {
+            color: var(--apple-black);
+            font-size: 22px;
+            text-decoration: none;
+            opacity: 0.6;
+            transition: 0.3s;
+        }
+
+        .social-links a:hover {
+            opacity: 1;
+            color: var(--apple-blue);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #d1d1d6; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #8e8e93; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="#" class="logo">M. MENAKPO</a>
+            <ul id="menu">
+                <li><a href="#about">À propos</a></li>
+                <li><a href="#vision">Vision</a></li>
+                <li><a href="#projects">Projets</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-label">UI/UX Designer & Développeuse Front-end</div>
+        <h1>L'humain au cœur du code.</h1>
+        <p>J'imagine et construis des interfaces qui allient esthétique, accessibilité et performance.</p>
+        <div class="hero-btns">
+            <a href="#projects" class="apple-btn">Découvrir mes projets</a>
+            <a href="#contact" style="display: flex; align-items: center; color: var(--apple-blue); text-decoration: none; font-weight: 500; font-size: 17px;">Me contacter <i class="fas fa-chevron-right" style="margin-left: 8px; font-size: 14px;"></i></a>
+        </div>
+    </section>
+
+    <!-- Section Profil -->
+    <section id="about" class="profile-section reveal">
+        <div class="profile-container">
+            <div class="profile-image-wrapper">
+                <img src="images/madeleine.jpg" alt="Madeleine MENAKPO" onerror="this.src='https://via.placeholder.com/400?text=Madeleine'">
+            </div>
+            <div class="profile-text">
+                <h2>À propos de moi</h2>
+                <p style="font-size: clamp(16px, 3vw, 19px); color: var(--apple-gray); margin-bottom: 20px;">
+                    Passionnée par le design d'interface et les nouvelles technologies, j'accompagne les entreprises dans la création de produits numériques impactants.
+                </p>
+                <p style="font-size: clamp(16px, 3vw, 19px); color: var(--apple-gray);">
+                    Mon double profil me permet de faire le pont entre les besoins utilisateurs et les contraintes techniques, garantissant des solutions fluides et élégantes.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="vision" class="vision-section reveal">
+        <div class="container">
+            <h2 class="section-title">Vision</h2>
+            <p style="font-size: clamp(18px, 4vw, 24px); color: var(--apple-gray); max-width: 850px; margin: 0 auto;">
+                Je crois en un web plus humain, plus simple, plus inclusif. Le design et le développement sont deux langages complémentaires au service d'expériences mémorables.
+            </p>
+            
+            <div class="vision-grid">
+                <div class="vision-card">
+                    <i class="fas fa-fingerprint"></i>
+                    <h3>Approche Centrée Humain</h3>
+                    <p>Chaque détail compte — du premier wireframe à la dernière ligne de code CSS.</p>
+                </div>
+                <div class="vision-card">
+                    <i class="fas fa-infinity"></i>
+                    <h3>Fusion Design & Dev</h3>
+                    <p>Supprimer les barrières entre l'idée créative et l'implémentation technique.</p>
+                </div>
+                <div class="vision-card">
+                    <i class="fas fa-universal-access"></i>
+                    <h3>Inclusion Totale</h3>
+                    <p>Concevoir pour tous, en respectant les standards d'accessibilité les plus stricts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="vision-section reveal" style="background: #fbfbfd;">
+        <div class="container">
+            <h2 class="section-title">Expertise</h2>
+            <div class="vision-grid">
+                <div class="vision-card" style="background: white;">
+                    <h3>UX Design</h3>
+                    <p>Recherche utilisateur, interviews, wireframes et tests utilisateur.</p>
+                    <div class="skills-container">
+                        <span class="skill-chip">User Research</span>
+                        <span class="skill-chip">Wireframing</span>
+                        <span class="skill-chip">Prototypage</span>
+                    </div>
+                </div>
+                <div class="vision-card" style="background: white;">
+                    <h3>UI Design</h3>
+                    <p>Design systems, maquettes responsives et cohérence visuelle.</p>
+                    <div class="skills-container">
+                        <span class="skill-chip">Figma</span>
+                        <span class="skill-chip">Design System</span>
+                        <span class="skill-chip">Accessibilité</span>
+                    </div>
+                </div>
+                <div class="vision-card" style="background: white;">
+                    <h3>Développement</h3>
+                    <p>Intégration front-end moderne focus performance et clean code.</p>
+                    <div class="skills-container">
+                        <span class="skill-chip">React</span>
+                        <span class="skill-chip">Tailwind CSS</span>
+                        <span class="skill-chip">JavaScript</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="project-section">
+        <div class="container">
+            <h2 class="section-title" style="color: white; text-align: left;">Projets en équipe</h2>
+            <div class="project-grid">
+                <!-- Projet 1: Flaymo Pay -->
+                <div class="project-card reveal">
+                    <div class="project-content">
+                        <div class="project-tag">Fintech</div>
+                        <div class="project-name">Flaymo Pay</div>
+                        <p class="project-desc">Plateforme de réservation aérienne via Mobile Money. Conception UX et intégration front-end complète.</p>
+                        <a href="flymopay.html" class="project-btn">Voir le projet <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="project-bg" style="background: linear-gradient(135deg, #0071e3, #000);"></div>
+                    <div class="project-overlay"></div>
+                </div>
+
+                <!-- Projet 2: Hermès Ads -->
+                <div class="project-card reveal">
+                    <div class="project-content">
+                        <div class="project-tag">Marketing</div>
+                        <div class="project-name">Hermès Ads</div>
+                        <p class="project-desc">Automatisation de tâches marketing. Développement front-end de l'outil de gestion de campagnes intelligentes.</p>
+                        <a href="hermes.html" class="project-btn">Voir le projet <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="project-bg" style="background: linear-gradient(135deg, #434343, #000);"></div>
+                    <div class="project-overlay"></div>
+                </div>
+
+                <!-- Projet 3: Synaptigenix -->
+                <div class="project-card reveal wide">
+                    <div class="project-content">
+                        <div class="project-tag">Health Tech • En cours</div>
+                        <div class="project-name">Synaptigenix</div>
+                        <p class="project-desc">Plateforme de gestion cognitive innovante pour le secteur de la santé. Optimisation des flux de données et interface de suivi patient.</p>
+                        <a href="synaptigenix.html" class="project-btn">En savoir plus <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="project-bg" style="background: radial-gradient(circle at top right, #2c2c2e, #000);"></div>
+                    <div class="project-overlay"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="cta-section reveal">
+        <div class="container">
+            <h2 style="font-size: clamp(32px, 8vw, 56px); font-weight: 700; margin-bottom: 20px;">Prête pour le prochain défi.</h2>
+            <p style="font-size: clamp(18px, 4vw, 24px); color: var(--apple-gray); margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto;">Parlons de votre projet et construisons ensemble l'avenir du web.</p>
+            <a href="mailto:votremail@exemple.com" class="apple-btn">Me contacter par email</a>
+            
+            <div class="social-links" style="margin-top: 60px;">
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-behance"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-figma"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Madeleine MENAKPO &copy; 2025. Tous droits réservés.</p>
+        <p style="margin-top: 10px; opacity: 0.6;">Conçu avec passion, accessibilité et performance.</p>
+    </footer>
+
+    <script>
+        // Reveal animation on scroll
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+
+        window.addEventListener("scroll", reveal);
+        reveal(); // Initial check
+
+        // Header transparency on scroll
+        window.addEventListener("scroll", function() {
+            const header = document.querySelector("header");
+            if (window.scrollY > 50) {
+                header.style.background = "rgba(255, 255, 255, 0.85)";
+            } else {
+                header.style.background = "rgba(255, 255, 255, 0.72)";
+            }
+        });
+    </script>
+
+</body>
+</html>
